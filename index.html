@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nosso Amor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      color: #333;
+    }
+    header {
+      background: #ff69b4;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    .section {
+      padding: 2rem;
+    }
+    .timeline, .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .memory, .photo {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: calc(50% - 1rem);
+    }
+    .memory img, .photo img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .love-letter {
+      background: #fffaf0;
+      padding: 1.5rem;
+      border-radius: 10px;
+      font-style: italic;
+      margin-top: 1rem;
+    }
+    .btn {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 2rem;
+    }
+    .surprise {
+      display: none;
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      color: #e91e63;
+      animation: fadeIn 2s ease-in;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Feliz Dia dos Namorados 💖</h1>
+  <p>Nossa história contada em memórias, imagens e amor</p>
+  <div id="contador-dias" style="margin-top: 1rem; font-size: 1.2rem;">
+    Estamos juntos há <span id="dias"></span> dias! 💘
+  </div>
+</header>
+
+<section class="section">
+  <h2>✨ Nossa Linha do Tempo</h2>
+  <div class="timeline">
+    <div class="memory">
+      <img src="pesqueiro.jpg" alt="Primeiro encontro">
+      <p><strong>Primeiro Encontro</strong><br>O dia em que tudo começou...</p>
+    </div>
+    <div class="memory">
+      <img src="thermas.jpg" alt="Viagem Juntos">
+      <p><strong>Viagem inesquecível</strong><br>Nosso paraíso juntos 🌅</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>📷 Nossa Galeria</h2>
+  <div class="gallery">
+    <div class="photo"><img src="ouropreto.jpg" alt="Foto 1"></div>
+    <div class="photo"><img src="ourobr.jpg" alt="Foto 2"></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>💌 Cartinha de Amor</h2>
+  <div class="love-letter">
+    Meu amor, cada momento ao seu lado é uma lembrança preciosa. Obrigado(a) por ser meu dengo meu trenzinho, e tudo que a de bom nessa vida. Te amo infinitamente ❤️
+  </div>
+</section>
+
+<section class="section">
+  <h2>🎵 Nossa Música</h2>
+  <iframe width="100%" height="315" src="https://www.youtube.com/watch?v=MslF0opnSS8" frameborder="0" allowfullscreen></iframe>
+</section>
+
+<section class="section" style="text-align: center;">
+  <button class="btn" onclick="mostrarSurpresa()">Clique aqui se me ama 🥰</button>
+  <div class="surprise" id="surpresa">Eu também te amo! 💖 Para sempre, juntos!</div>
+</section>
+
+<script>
+  function mostrarSurpresa() {
+    document.getElementById('surpresa').style.display = 'block';
+  }
+
+  // TEMPORIZADOR DE DIAS JUNTOS
+  const dataInicio = new Date('2025-01-29'); // Altere para a data do relacionamento
+  const hoje = new Date();
+  const diffTime = Math.abs(hoje - dataInicio);
+  const diasJuntos = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  document.getElementById('dias').textContent = diasJuntos;
+</script>
+
+</body>
+</html>
