@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kay &amp; Ju 💖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #1a0a0f;
+      color: #f5e6ea;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    canvas#particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content { position: relative; z-index: 1; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: radial-gradient(ellipse at 50% 40%, rgba(180,30,60,0.18) 0%, transparent 70%);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #c0607a;
+      margin-bottom: 1.2rem;
+      font-weight: 300;
+    }
+
+    .hero-names {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 10vw, 6rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: #f9dde3;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-names em {
+      font-style: italic;
+      color: #e8718a;
+    }
+
+    .hero-divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #c0607a, transparent);
+      margin: 1.8rem auto;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #c0a0a8;
+      letter-spacing: 0.05em;
+      max-width: 380px;
+      line-height: 1.8;
+    }
+
+    .counter-badge {
+      display: inline-block;
+      margin-top: 2.5rem;
+      padding: 0.7rem 1.8rem;
+      border: 1px solid rgba(192, 96, 122, 0.4);
+      border-radius: 40px;
+      font-size: 0.85rem;
+      color: #e8a0b0;
+      letter-spacing: 0.08em;
+    }
+
+    .counter-badge strong {
+      color: #f9dde3;
+      font-weight: 700;
+    }
+
+    /* SECTION BASE */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c0607a;
+      margin-bottom: 0.6rem;
+      font-weight: 400;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      color: #f5dde3;
+      margin-bottom: 2.5rem;
+      line-height: 1.2;
+    }
+
+    /* CAROUSEL */
+    .carousel-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .carousel-track-outer {
+      overflow: hidden;
+      border-radius: 14px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      position: relative;
+      background: #0d0508;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      border-radius: 14px 14px 0 0;
+    }
+
+    .carousel-caption {
+      padding: 1.2rem 1.6rem 1.5rem;
+      background: rgba(20,6,12,0.95);
+      border-radius: 0 0 14px 14px;
+      border: 1px solid rgba(192,96,122,0.15);
+      border-top: none;
+    }
+
+    .carousel-caption-event {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #c0607a;
+      margin-bottom: 0.3rem;
+    }
+
+    .carousel-caption-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: #f5dde3;
+      margin-bottom: 0.35rem;
+    }
+
+    .carousel-caption-desc {
+      font-size: 0.82rem;
+      color: #a07880;
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* CAROUSEL CONTROLS */
+    .carousel-btn {
+      position: absolute;
+      top: calc(50% - 28px);
+      transform: translateY(-50%);
+      background: rgba(20,6,12,0.75);
+      border: 1px solid rgba(192,96,122,0.35);
+      color: #e8a0b0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s, border-color 0.25s;
+      z-index: 2;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(192,96,122,0.25);
+      border-color: rgba(192,96,122,0.7);
+    }
+
+    .carousel-btn-prev { left: -22px; }
+    .carousel-btn-next { right: -22px; }
+
+    /* DOTS */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(192,96,122,0.25);
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: #c0607a;
+      transform: scale(1.35);
+    }
+
+    /* COUNTER */
+    .carousel-counter {
+      text-align: center;
+      margin-top: 0.8rem;
+      font-size: 0.75rem;
+      color: #a07880;
+      letter-spacing: 0.1em;
+    }
+
+    /* LETTER */
+    .letter-wrap {
+      border-left: 2px solid rgba(192,96,122,0.4);
+      padding: 1.8rem 2rem;
+      background: rgba(255,255,255,0.02);
+      border-radius: 0 10px 10px 0;
+    }
+
+    .letter-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.85;
+      color: #e0c0c8;
+      font-weight: 400;
+    }
+
+    .letter-sign {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: #c0607a;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* MUSIC */
+    .music-section {
+      text-align: center;
+      padding: 4rem 2rem 5rem;
+      background: rgba(180,30,60,0.05);
+      border-top: 1px solid rgba(192,96,122,0.12);
+      border-bottom: 1px solid rgba(192,96,122,0.12);
+    }
+
+    .music-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    .music-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #f5dde3;
+      margin-bottom: 0.5rem;
+    }
+
+    .music-subtitle {
+      font-size: 0.85rem;
+      color: #a07880;
+      font-weight: 300;
+      max-width: 400px;
+      margin: 0 auto 1.8rem;
+      line-height: 1.7;
+    }
+
+    audio {
+      filter: invert(1) hue-rotate(300deg) brightness(0.7);
+      border-radius: 40px;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    /* SURPRISE */
+    .surprise-section {
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+
+    .surprise-btn {
+      background: transparent;
+      border: 1px solid rgba(192,96,122,0.5);
+      color: #e8a0b0;
+      padding: 0.9rem 2.4rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    .surprise-btn:hover {
+      background: rgba(192,96,122,0.15);
+      border-color: rgba(192,96,122,0.8);
+      color: #f9dde3;
+    }
+
+    .surprise-msg {
+      display: none;
+      margin-top: 2rem;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #e8718a;
+      animation: fadeUp 1.2s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-divider {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(192,96,122,0.2), transparent);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-size: 0.75rem;
+      color: rgba(192,96,122,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 600px) {
+      .hero-names { font-size: 3rem; }
+      .carousel-btn-prev { left: 4px; }
+      .carousel-btn-next { right: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="content">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">Feliz Dia dos Namorados</p>
+    <h1 class="hero-names"><em>Kay</em> &amp; <em>Ju</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Nossa história contada em memórias, imagens e amor.</p>
+    <div class="counter-badge">Juntos há <strong id="dias">—</strong> dias 💘</div>
+  </div>
+
+  <!-- CARROSSEL -->
+  <div class="section-divider"></div>
+  <section class="section">
+    <p class="section-label">Nossas memórias</p>
+    <h2 class="section-title">Momentos que guardaremos para sempre</h2>
+
+    <div class="carousel-wrap">
+      <button class="carousel-btn carousel-btn-prev" onclick="moverCarrossel(-1)" aria-label="Anterior">&#8592;</button>
+      <button class="carousel-btn carousel-btn-next" onclick="moverCarrossel(1)" aria-label="Próxima">&#8594;</button>
+
+      <div class="carousel-track-outer">
+        <div class="carousel-track" id="carrosselTrack">
+
+          <!-- 1 -->
+          <div class="carousel-slide">
+            <img src="pesqueiro.jpg" alt="O pesqueiro">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Primeiro encontro</p>
+              <p class="carousel-caption-title">O pesqueiro</p>
+              <p class="carousel-caption-desc">O dia em que tudo começou, com registros e tudo heheh.</p>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="carousel-slide">
+            <img src="thermas.jpg" alt="Viagem ao Thermas">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Viagem inesquecível</p>
+              <p class="carousel-caption-title">Nós e um Palio na estrada</p>
+              <p class="carousel-caption-desc">Thermas, aventura e a melhor companhia do mundo.</p>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="carousel-slide">
+            <img src="ouropreto.jpg" alt="Ouro Preto">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Galeria</p>
+              <p class="carousel-caption-title">Ouro Preto</p>
+              <p class="carousel-caption-desc">Uma cidade histórica com a melhor companhia.</p>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="carousel-slide">
+            <img src="ourobr.jpg" alt="Ouro Branco">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Galeria</p>
+              <p class="carousel-caption-title">Ouro Branco</p>
+              <p class="carousel-caption-desc">Pertinho de casa, mas sempre especial.</p>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="carousel-slide">
+            <img src="teteu.jpeg" alt="Novas experiências">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Novas experiências</p>
+              <p class="carousel-caption-title">Novas experiências</p>
+              <p class="carousel-caption-desc">Kkkkk coisas legais aconteceram esse dia.</p>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div class="carousel-slide">
+            <img src="bahia.jpeg" alt="Bahia">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">2 viajens em 15 dias kkkk</p>
+              <p class="carousel-caption-title">2 viajens em 15 dias kkkk</p>
+              <p class="carousel-caption-desc">Foi desgastante mas com vc tudo fica legal.</p>
+            </div>
+          </div>
+
+          <!-- 7 -->
+          <div class="carousel-slide">
+            <img src="facap.jpeg" alt="FACAP">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">FACAP</p>
+              <p class="carousel-caption-title">FACAP</p>
+              <p class="carousel-caption-desc">DINDIN NA CONTA.</p>
+            </div>
+          </div>
+
+          <!-- 8 -->
+          <div class="carousel-slide">
+            <img src="Cacau-coco.jpeg" alt="Terceiro integrante">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Nos juntinhos</p>
+              <p class="carousel-caption-title">Terceiro integrante</p>
+              <p class="carousel-caption-desc">Amor queria um cachorro, gato, papagaio kkkk você seria minha melhor amiga.</p>
+            </div>
+          </div>
+
+          <!-- 9 -->
+          <div class="carousel-slide">
+            <img src="ia.jpeg" alt="Nos juntinhos">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Nos juntinhos</p>
+              <p class="carousel-caption-title">Nos juntinhos</p>
+              <p class="carousel-caption-desc">Você seria minha melhor amiga.</p>
+            </div>
+          </div>
+
+          <!-- 10 -->
+          <div class="carousel-slide">
+            <img src="nathan.jpeg" alt="Grande Natanael">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Grande Natanael</p>
+              <p class="carousel-caption-title">Grande Natanael</p>
+              <p class="carousel-caption-desc">Natahan dos caminhão.</p>
+            </div>
+          </div>
+
+          <!-- 11 -->
+          <div class="carousel-slide">
+            <img src="sushi.jpeg" alt="Tem vida mais barata mas não presta">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Tem vida mais barata mas não presta</p>
+              <p class="carousel-caption-title">Tem vida mais barata mas não presta</p>
+              <p class="carousel-caption-desc">Dois de roça kkkk.</p>
+            </div>
+          </div>
+
+          <!-- 12 -->
+          <div class="carousel-slide">
+            <img src="cacaumi.jpeg" alt="Cacau Coco">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Cacau Coco</p>
+              <p class="carousel-caption-title">Cacau Coco</p>
+              <p class="carousel-caption-desc">Ela cresceu e mija e caga em tudo.</p>
+            </div>
+          </div>
+
+          <!-- 13 -->
+          <div class="carousel-slide">
+            <img src="copa.jpeg" alt="Primeira Copa do Mundo">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Primeira Copa do Mundo</p>
+              <p class="carousel-caption-title">Primeira Copa do Mundo</p>
+              <p class="carousel-caption-desc">Eu vc e futebol.</p>
+            </div>
+          </div>
+
+          <!-- 14 -->
+          <div class="carousel-slide">
+            <img src="sala.jpeg" alt="Dormir em diversos lugares">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Dormir em diversos lugares</p>
+              <p class="carousel-caption-title">Dormir em diversos lugares</p>
+              <p class="carousel-caption-desc">Um dos hobbys preferidos.</p>
+            </div>
+          </div>
+
+          <!-- 15 -->
+          <div class="carousel-slide">
+            <img src="pesca.jpeg" alt="Minha companheira">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Minha companheira</p>
+              <p class="carousel-caption-title">Minha companheira</p>
+              <p class="carousel-caption-desc">Vamos molhar a minhoca?</p>
+            </div>
+          </div>
+
+          <!-- 16 -->
+          <div class="carousel-slide">
+            <img src="20anos.jpeg" alt="Estilosos">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">20 anos</p>
+              <p class="carousel-caption-title">Estilosos</p>
+              <p class="carousel-caption-desc">Estávamos lindões esse dia.</p>
+            </div>
+          </div>
+
+          <!-- 17 -->
+          <div class="carousel-slide">
+            <img src="buque.jpeg" alt="Surpresa">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Surpresa</p>
+              <p class="carousel-caption-title">Surpresa</p>
+              <p class="carousel-caption-desc">Foi do meu jeitinho, mas espero que tenha gostado.</p>
+            </div>
+          </div>
+
+          <!-- 18 -->
+          <div class="carousel-slide">
+            <img src="sushi2.jpeg" alt="Tem vida mais barata mas não presta 2.0">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Tem vida mais barata mas não presta 2.0</p>
+              <p class="carousel-caption-title">Tem vida mais barata mas não presta 2.0</p>
+              <p class="carousel-caption-desc">Aqui somos menos da roça.</p>
+            </div>
+          </div>
+
+          <!-- 19 -->
+          <div class="carousel-slide">
+            <img src="Cacau-coco.jpeg" alt="Cacau Coco">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Cacau Coco</p>
+              <p class="carousel-caption-title">Cacau Coco</p>
+              <p class="carousel-caption-desc">Ela cresceu e mija e caga em tudo.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="carousel-dots" id="carrosselDots"></div>
+      <p class="carousel-counter"><span id="carrosselAtual">1</span> / <span id="carrosselTotal">19</span></p>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <div class="section-divider"></div>
+  <section class="section">
+    <p class="section-label">Cartinha de amor</p>
+    <h2 class="section-title">Para você, Kay</h2>
+    <div class="letter-wrap">
+      <p class="letter-text">Cada momento ao seu lado é uma lembrança preciosa. Obrigado por ser meu dengo, meu trenzinho, e tudo de bom que existe nessa vida. Te amo infinitamente ❤️</p>
+      <p class="letter-sign">— Com todo amor, Ju</p>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <div class="music-section">
+    <div class="music-icon">🎶</div>
+    <h2 class="music-title">Nossa música</h2>
+    <p class="music-subtitle">Feche os olhos, aperte o play e sinta cada nota.</p>
+    <audio controls autoplay loop>
+      <source src="Aliança - Tribalistas (lyric video) [3JiMr-HgHJ8].mp3" type="audio/mpeg">
+      Seu navegador não suporta o player de áudio.
+    </audio>
+  </div>
+
+  <!-- SURPRISE -->
+  <section class="surprise-section">
+    <button class="surprise-btn" onclick="mostrarSurpresa()">Adicionar uma memória 🥰</button>
+    <p class="surprise-msg" id="surpresa">Eu também te amo! 💖 Para sempre, juntos.</p>
+  </section>
+
+  <div class="footer">Kay &amp; Ju · 2025 – ∞</div>
+
+</div>
+
+<script>
+  // CONTADOR DE DIAS
+  const dataInicio = new Date('2025-01-29');
+  const hoje = new Date();
+  const dias = Math.floor((hoje - dataInicio) / 86400000);
+  document.getElementById('dias').textContent = dias;
+
+  // SURPRISE
+  function mostrarSurpresa() {
+    document.getElementById('surpresa').style.display = 'block';
+  }
+
+  // CARROSSEL
+  const totalSlides = 19;
+  let slideAtual = 0;
+  let autoplayTimer = null;
+
+  const track = document.getElementById('carrosselTrack');
+  const dotsContainer = document.getElementById('carrosselDots');
+  const labelAtual = document.getElementById('carrosselAtual');
+  document.getElementById('carrosselTotal').textContent = totalSlides;
+
+  // Gerar dots
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.addEventListener('click', () => irParaSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function atualizarCarrossel() {
+    track.style.transform = 'translateX(-' + (slideAtual * 100) + '%)';
+    labelAtual.textContent = slideAtual + 1;
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === slideAtual));
+  }
+
+  function moverCarrossel(dir) {
+    slideAtual = (slideAtual + dir + totalSlides) % totalSlides;
+    atualizarCarrossel();
+    resetAutoplay();
+  }
+
+  function irParaSlide(i) {
+    slideAtual = i;
+    atualizarCarrossel();
+    resetAutoplay();
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(() => moverCarrossel(1), 5000);
+  }
+
+  // Suporte a swipe
+  let touchStartX = 0;
+  const outer = document.querySelector('.carousel-track-outer');
+  outer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  outer.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) moverCarrossel(diff > 0 ? 1 : -1);
+  });
+
+  resetAutoplay();
+
+  // ANIMAÇÃO DE CORAÇÕES
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function heartPath(ctx, x, y, size) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(size, size);
+    ctx.beginPath();
+    ctx.moveTo(0, -0.3);
+    ctx.bezierCurveTo(0, -1, -1.5, -1, -1.5, 0.1);
+    ctx.bezierCurveTo(-1.5, 0.9, 0, 1.5, 0, 1.5);
+    ctx.bezierCurveTo(0, 1.5, 1.5, 0.9, 1.5, 0.1);
+    ctx.bezierCurveTo(1.5, -1, 0, -1, 0, -0.3);
+    ctx.closePath();
+    ctx.restore();
+  }
+
+  function spawnParticle() {
+    const colors = ['rgba(200,80,110,','rgba(240,140,160,','rgba(160,50,80,','rgba(255,180,190,'];
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: canvas.height + 20,
+      size: Math.random() * 6 + 3,
+      speed: Math.random() * 0.6 + 0.3,
+      drift: (Math.random() - 0.5) * 0.4,
+      opacity: Math.random() * 0.4 + 0.15,
+      color: c,
+      rot: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.02
+    });
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (Math.random() < 0.06) spawnParticle();
+    particles = particles.filter(p => p.y > -40);
+    for (const p of particles) {
+      p.y -= p.speed;
+      p.x += p.drift;
+      p.rot += p.rotSpeed;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      heartPath(ctx, 0, 0, p.size);
+      ctx.fillStyle = p.color + p.opacity + ')';
+      ctx.fill();
+      ctx.restore();
+    }
+    requestAnimationFrame(animateParticles);
+  }
+
+  animateParticles();
+</script>
+
+</body>
+</html>
