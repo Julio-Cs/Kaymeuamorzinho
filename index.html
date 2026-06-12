@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Feliz Dias dos Namorados💖</title>
+  <title>Kay &amp; Ju 💖</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
   <style>
@@ -97,7 +97,7 @@
     /* SECTION BASE */
     .section {
       padding: 5rem 2rem;
-      max-width: 820px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
@@ -119,84 +119,127 @@
       line-height: 1.2;
     }
 
-    /* TIMELINE */
-    .timeline-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+    /* CAROUSEL */
+    .carousel-wrap {
+      position: relative;
+      width: 100%;
     }
 
-    .memory-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(192, 96, 122, 0.2);
-      border-radius: 12px;
+    .carousel-track-outer {
       overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
+      border-radius: 14px;
     }
 
-    .memory-card:hover {
-      border-color: rgba(192, 96, 122, 0.5);
-      transform: translateY(-4px);
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
     }
 
-    .memory-card-img {
+    .carousel-slide {
+      min-width: 100%;
+      position: relative;
+      background: #0d0508;
+    }
+
+    .carousel-slide img {
       width: 100%;
       aspect-ratio: 4/3;
       object-fit: cover;
       display: block;
+      border-radius: 14px 14px 0 0;
     }
 
-    .memory-card-body {
-      padding: 1.1rem 1.2rem 1.3rem;
+    .carousel-caption {
+      padding: 1.2rem 1.6rem 1.5rem;
+      background: rgba(20,6,12,0.95);
+      border-radius: 0 0 14px 14px;
+      border: 1px solid rgba(192,96,122,0.15);
+      border-top: none;
     }
 
-    .memory-card-date {
+    .carousel-caption-event {
       font-size: 0.7rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: #c0607a;
-      margin-bottom: 0.35rem;
-      font-weight: 400;
+      margin-bottom: 0.3rem;
     }
 
-    .memory-card-title {
+    .carousel-caption-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.05rem;
-      font-weight: 400;
+      font-size: 1.15rem;
       color: #f5dde3;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
 
-    .memory-card-desc {
-      font-size: 0.83rem;
+    .carousel-caption-desc {
+      font-size: 0.82rem;
       color: #a07880;
       font-weight: 300;
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
-    /* GALLERY */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    /* CAROUSEL CONTROLS */
+    .carousel-btn {
+      position: absolute;
+      top: calc(50% - 28px);
+      transform: translateY(-50%);
+      background: rgba(20,6,12,0.75);
+      border: 1px solid rgba(192,96,122,0.35);
+      color: #e8a0b0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s, border-color 0.25s;
+      z-index: 2;
     }
 
-    .gallery-item {
-      border-radius: 10px;
-      overflow: hidden;
-      aspect-ratio: 1;
-      background: rgba(180,30,60,0.06);
-      border: 1px solid rgba(192,96,122,0.15);
-      transition: transform 0.3s;
+    .carousel-btn:hover {
+      background: rgba(192,96,122,0.25);
+      border-color: rgba(192,96,122,0.7);
     }
 
-    .gallery-item:hover { transform: scale(1.03); }
+    .carousel-btn-prev { left: -22px; }
+    .carousel-btn-next { right: -22px; }
 
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    /* DOTS */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(192,96,122,0.25);
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: #c0607a;
+      transform: scale(1.35);
+    }
+
+    /* COUNTER */
+    .carousel-counter {
+      text-align: center;
+      margin-top: 0.8rem;
+      font-size: 0.75rem;
+      color: #a07880;
+      letter-spacing: 0.1em;
     }
 
     /* LETTER */
@@ -301,7 +344,7 @@
 
     .section-divider {
       width: 100%;
-      max-width: 820px;
+      max-width: 900px;
       margin: 0 auto;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(192,96,122,0.2), transparent);
@@ -315,9 +358,10 @@
       letter-spacing: 0.1em;
     }
 
-    @media (max-width: 520px) {
-      .timeline-grid, .gallery-grid { grid-template-columns: 1fr; }
+    @media (max-width: 600px) {
       .hero-names { font-size: 3rem; }
+      .carousel-btn-prev { left: 4px; }
+      .carousel-btn-next { right: 4px; }
     }
   </style>
 </head>
@@ -336,43 +380,214 @@
     <div class="counter-badge">Juntos há <strong id="dias">—</strong> dias 💘</div>
   </div>
 
-  <!-- TIMELINE -->
+  <!-- CARROSSEL -->
   <div class="section-divider"></div>
   <section class="section">
-    <p class="section-label">Linha do tempo</p>
+    <p class="section-label">Nossas memórias</p>
     <h2 class="section-title">Momentos que guardaremos para sempre</h2>
-    <div class="timeline-grid">
-      <div class="memory-card">
-        <img class="memory-card-img" src="pesqueiro.jpg" alt="Primeiro encontro no pesqueiro">
-        <div class="memory-card-body">
-          <p class="memory-card-date">Primeiro encontro</p>
-          <p class="memory-card-title">O pesqueiro</p>
-          <p class="memory-card-desc">O dia em que tudo começou, com registros e tudo heheh.</p>
-        </div>
-      </div>
-      <div class="memory-card">
-        <img class="memory-card-img" src="thermas.jpg" alt="Viagem ao Thermas">
-        <div class="memory-card-body">
-          <p class="memory-card-date">Viagem inesquecível</p>
-          <p class="memory-card-title">Nós e um Palio na estrada</p>
-          <p class="memory-card-desc">Thermas, aventura e a melhor companhia do mundo.</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- GALLERY -->
-  <div class="section-divider"></div>
-  <section class="section">
-    <p class="section-label">Galeria</p>
-    <h2 class="section-title">Fotos que contam nossa história</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="ouropreto.jpg" alt="Ouro Preto">
+    <div class="carousel-wrap">
+      <button class="carousel-btn carousel-btn-prev" onclick="moverCarrossel(-1)" aria-label="Anterior">&#8592;</button>
+      <button class="carousel-btn carousel-btn-next" onclick="moverCarrossel(1)" aria-label="Próxima">&#8594;</button>
+
+      <div class="carousel-track-outer">
+        <div class="carousel-track" id="carrosselTrack">
+
+          <!-- 1 -->
+          <div class="carousel-slide">
+            <img src="pesqueiro.jpg" alt="O pesqueiro">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Primeiro encontro</p>
+              <p class="carousel-caption-title">O pesqueiro</p>
+              <p class="carousel-caption-desc">O dia em que tudo começou, com registros e tudo heheh.</p>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="carousel-slide">
+            <img src="thermas.jpg" alt="Viagem ao Thermas">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Viagem inesquecível</p>
+              <p class="carousel-caption-title">Nós e um Palio na estrada</p>
+              <p class="carousel-caption-desc">Thermas, aventura e a melhor companhia do mundo.</p>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="carousel-slide">
+            <img src="ouropreto.jpg" alt="Ouro Preto">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Galeria</p>
+              <p class="carousel-caption-title">Ouro Preto</p>
+              <p class="carousel-caption-desc">Uma cidade histórica com a melhor companhia.</p>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="carousel-slide">
+            <img src="ourobr.jpg" alt="Ouro Branco">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Galeria</p>
+              <p class="carousel-caption-title">Ouro Branco</p>
+              <p class="carousel-caption-desc">Pertinho de casa, mas sempre especial.</p>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="carousel-slide">
+            <img src="teteu.jpeg" alt="Novas experiências">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Novas experiências</p>
+              <p class="carousel-caption-title">Novas experiências</p>
+              <p class="carousel-caption-desc">Kkkkk coisas legais aconteceram esse dia.</p>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div class="carousel-slide">
+            <img src="bahia.jpeg" alt="Bahia">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">2 viajens em 15 dias kkkk</p>
+              <p class="carousel-caption-title">2 viajens em 15 dias kkkk</p>
+              <p class="carousel-caption-desc">Foi desgastante mas com vc tudo fica legal.</p>
+            </div>
+          </div>
+
+          <!-- 7 -->
+          <div class="carousel-slide">
+            <img src="facap.jpg" alt="FACAP">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">FACAP</p>
+              <p class="carousel-caption-title">FACAP</p>
+              <p class="carousel-caption-desc">DINDIN NA CONTA.</p>
+            </div>
+          </div>
+
+          <!-- 8 -->
+          <div class="carousel-slide">
+            <img src="Cacau-coco.jpg" alt="Terceiro integrante">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Nos juntinhos</p>
+              <p class="carousel-caption-title">Terceiro integrante</p>
+              <p class="carousel-caption-desc">Amor queria um cachorro, gato, papagaio kkkk você seria minha melhor amiga.</p>
+            </div>
+          </div>
+
+          <!-- 9 -->
+          <div class="carousel-slide">
+            <img src="ia.jpg" alt="Nos juntinhos">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Nos juntinhos</p>
+              <p class="carousel-caption-title">Nos juntinhos</p>
+              <p class="carousel-caption-desc">Você seria minha melhor amiga.</p>
+            </div>
+          </div>
+
+          <!-- 10 -->
+          <div class="carousel-slide">
+            <img src="nathan.jpg" alt="Grande Natanael">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Grande Natanael</p>
+              <p class="carousel-caption-title">Grande Natanael</p>
+              <p class="carousel-caption-desc">Natahan dos caminhão.</p>
+            </div>
+          </div>
+
+          <!-- 11 -->
+          <div class="carousel-slide">
+            <img src="sushi.jpg" alt="Tem vida mais barata mas não presta">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Tem vida mais barata mas não presta</p>
+              <p class="carousel-caption-title">Tem vida mais barata mas não presta</p>
+              <p class="carousel-caption-desc">Dois de roça kkkk.</p>
+            </div>
+          </div>
+
+          <!-- 12 -->
+          <div class="carousel-slide">
+            <img src="cacaumi.jpg" alt="Cacau Coco">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Cacau Coco</p>
+              <p class="carousel-caption-title">Cacau Coco</p>
+              <p class="carousel-caption-desc">Ela cresceu e mija e caga em tudo.</p>
+            </div>
+          </div>
+
+          <!-- 13 -->
+          <div class="carousel-slide">
+            <img src="copa.jpg" alt="Primeira Copa do Mundo">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Primeira Copa do Mundo</p>
+              <p class="carousel-caption-title">Primeira Copa do Mundo</p>
+              <p class="carousel-caption-desc">Eu vc e futebol.</p>
+            </div>
+          </div>
+
+          <!-- 14 -->
+          <div class="carousel-slide">
+            <img src="sala.jpg" alt="Dormir em diversos lugares">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Dormir em diversos lugares</p>
+              <p class="carousel-caption-title">Dormir em diversos lugares</p>
+              <p class="carousel-caption-desc">Um dos hobbys preferidos.</p>
+            </div>
+          </div>
+
+          <!-- 15 -->
+          <div class="carousel-slide">
+            <img src="pesca.jpg" alt="Minha companheira">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Minha companheira</p>
+              <p class="carousel-caption-title">Minha companheira</p>
+              <p class="carousel-caption-desc">Vamos molhar a minhoca?</p>
+            </div>
+          </div>
+
+          <!-- 16 -->
+          <div class="carousel-slide">
+            <img src="20anos.jpg" alt="Estilosos">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">20 anos</p>
+              <p class="carousel-caption-title">Estilosos</p>
+              <p class="carousel-caption-desc">Estávamos lindões esse dia.</p>
+            </div>
+          </div>
+
+          <!-- 17 -->
+          <div class="carousel-slide">
+            <img src="buque.jpg" alt="Surpresa">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Surpresa</p>
+              <p class="carousel-caption-title">Surpresa</p>
+              <p class="carousel-caption-desc">Foi do meu jeitinho, mas espero que tenha gostado.</p>
+            </div>
+          </div>
+
+          <!-- 18 -->
+          <div class="carousel-slide">
+            <img src="sushi2.jpg" alt="Tem vida mais barata mas não presta 2.0">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Tem vida mais barata mas não presta 2.0</p>
+              <p class="carousel-caption-title">Tem vida mais barata mas não presta 2.0</p>
+              <p class="carousel-caption-desc">Aqui somos menos da roça.</p>
+            </div>
+          </div>
+
+          <!-- 19 -->
+          <div class="carousel-slide">
+            <img src="Cacau-coco.jpg" alt="Cacau Coco">
+            <div class="carousel-caption">
+              <p class="carousel-caption-event">Cacau Coco</p>
+              <p class="carousel-caption-title">Cacau Coco</p>
+              <p class="carousel-caption-desc">Ela cresceu e mija e caga em tudo.</p>
+            </div>
+          </div>
+
+        </div>
       </div>
-      <div class="gallery-item">
-        <img src="ourobr.jpg" alt="Ouro Branco">
-      </div>
+
+      <div class="carousel-dots" id="carrosselDots"></div>
+      <p class="carousel-counter"><span id="carrosselAtual">1</span> / <span id="carrosselTotal">19</span></p>
     </div>
   </section>
 
@@ -417,9 +632,62 @@
 
   // SURPRISE
   function mostrarSurpresa() {
-    const el = document.getElementById('surpresa');
-    el.style.display = 'block';
+    document.getElementById('surpresa').style.display = 'block';
   }
+
+  // CARROSSEL
+  const totalSlides = 19;
+  let slideAtual = 0;
+  let autoplayTimer = null;
+
+  const track = document.getElementById('carrosselTrack');
+  const dotsContainer = document.getElementById('carrosselDots');
+  const labelAtual = document.getElementById('carrosselAtual');
+  document.getElementById('carrosselTotal').textContent = totalSlides;
+
+  // Gerar dots
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.addEventListener('click', () => irParaSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function atualizarCarrossel() {
+    track.style.transform = 'translateX(-' + (slideAtual * 100) + '%)';
+    labelAtual.textContent = slideAtual + 1;
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === slideAtual));
+  }
+
+  function moverCarrossel(dir) {
+    slideAtual = (slideAtual + dir + totalSlides) % totalSlides;
+    atualizarCarrossel();
+    resetAutoplay();
+  }
+
+  function irParaSlide(i) {
+    slideAtual = i;
+    atualizarCarrossel();
+    resetAutoplay();
+  }
+
+  function resetAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = setInterval(() => moverCarrossel(1), 5000);
+  }
+
+  // Suporte a swipe
+  let touchStartX = 0;
+  const outer = document.querySelector('.carousel-track-outer');
+  outer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  outer.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) moverCarrossel(diff > 0 ? 1 : -1);
+  });
+
+  resetAutoplay();
 
   // ANIMAÇÃO DE CORAÇÕES
   const canvas = document.getElementById('particles');
@@ -448,12 +716,7 @@
   }
 
   function spawnParticle() {
-    const colors = [
-      'rgba(200,80,110,',
-      'rgba(240,140,160,',
-      'rgba(160,50,80,',
-      'rgba(255,180,190,'
-    ];
+    const colors = ['rgba(200,80,110,','rgba(240,140,160,','rgba(160,50,80,','rgba(255,180,190,'];
     const c = colors[Math.floor(Math.random() * colors.length)];
     particles.push({
       x: Math.random() * canvas.width,
